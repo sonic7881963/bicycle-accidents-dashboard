@@ -8,8 +8,8 @@ The written report is intentionally not included in this package so it can be su
 
 - `app.py`: Streamlit dashboard.
 - `src/bike_data.py`: data loading, cleaning, filtering, summary statistics, and recommendations.
-- `archive/Accidents.csv`: accident-level source data.
-- `archive/Bikers.csv`: cyclist/casualty-level source data.
+- `archive/Accidents.csv.gz`: compressed accident-level source data for GitHub upload.
+- `archive/Bikers.csv.gz`: compressed cyclist/casualty-level source data for GitHub upload.
 - `requirements.txt`: Python dependencies.
 - `tests/test_bike_data.py`: unit tests for the analysis logic.
 - `assets/dashboard_preview.jpg`: static dashboard preview for grading or quick review.
