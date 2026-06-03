@@ -10,6 +10,8 @@ import pandas as pd
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 ACCIDENTS_PATH = PROJECT_ROOT / "archive" / "Accidents.csv"
 BIKERS_PATH = PROJECT_ROOT / "archive" / "Bikers.csv"
+ACCIDENTS_GZ_PATH = PROJECT_ROOT / "archive" / "Accidents.csv.gz"
+BIKERS_GZ_PATH = PROJECT_ROOT / "archive" / "Bikers.csv.gz"
 
 SEVERITY_ORDER = ["Slight", "Serious", "Fatal"]
 SERIOUS_FATAL = ["Serious", "Fatal"]
@@ -110,7 +112,18 @@ def preprocess(accidents: pd.DataFrame, bikers: pd.DataFrame) -> tuple[pd.DataFr
     return merged, quality
 
 
-def load_data(accidents_path: Path = ACCIDENTS_PATH, bikers_path: Path = BIKERS_PATH) -> tuple[pd.DataFrame, DataQualitySummary]:
+def resolve_data_path(csv_path: Path, gz_path: Path) -> Path:
+    if csv_path.exists():
+        return csv_path
+    return gz_path
+
+
+def load_data(
+    accidents_path: Path | None = None,
+    bikers_path: Path | None = None,
+) -> tuple[pd.DataFrame, DataQualitySummary]:
+    accidents_path = accidents_path or resolve_data_path(ACCIDENTS_PATH, ACCIDENTS_GZ_PATH)
+    bikers_path = bikers_path or resolve_data_path(BIKERS_PATH, BIKERS_GZ_PATH)
     accidents = pd.read_csv(accidents_path)
     bikers = pd.read_csv(bikers_path)
     return preprocess(accidents, bikers)
